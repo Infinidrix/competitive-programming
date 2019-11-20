@@ -67,7 +67,29 @@ def multiply(num1, num2):
 		multip = "-" + multip
 	return multip
 
+def divide(divr, divd):
+	divd += "000"
+	result = ""
+	while len(divd) >= len(divr):
+		print("this is not the same", divd)
+		i = 0
+		temp_value = divd[0:len(divr)]
+		if temp_value < divd:
+			if len(divd) + 1 < len(divr):
+				break
+			temp_value = divd[0:len(divr)+1]
+			i = 1
+		temp = 0
+		while temp_value>divr:
+			# make add happen
+			temp_value = adder(temp_value, "-"+divr)
+			temp += 1
+		result += str(temp)
+		divd = temp_value+divd[len(divr) + i + 1:]
+		print(result, divd)
+	print(result[0:-3],".",result[-3:])	
+
 num1 = input("Enter the first number:")
 num2 = input("Enter the second number:")
-print(multiply(num1, num2))
-	
+print(divide(num1, num2))
+		
