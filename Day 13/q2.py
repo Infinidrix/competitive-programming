@@ -1,49 +1,59 @@
-def end_correcter(movt):
-	sum_x = 0
-	sum_y = 0
-	remover_x = [(0, 0), (1, 0), (-1, 0)]
-	remover_y = [(0, 0), (0, 1), (0, -1)]
-	for i in range(len(movt)):
-		sum_x += movt[i][0]
-		sum_y += movt[i][1]
-	while sum_x != 0:
-		if sum_x < 0:
-			movt.remove((-1, 0))
-			sum_x += 1
+def find_last_one(string):
+	for i in range(len(string), 0, -1):
+		if string[i - 1] == "1":
+			return i
+
+
+def find_num(string, start, end, length, num):
+	#improve this
+	num_str = str(num)
+	for i in range(start - length, start):
+		if i < 0: continue
+		if string[i] == num_str:
+			return True, i
+
+	for i in range(end + 1, end + length + 1):
+		if i >= len(string): break
+		if string[i] == num_str:
+			return True, i
+	return False, 0
+
+
+def perm_check(perm):
+	loc = perm.index("1")
+	result = ["1"]
+	start = loc
+	end = loc
+	for i in range(len(perm) - 1):
+		num = i + 2
+		search_for = len(result) - find_last_one(result)
+		found_flag = True
+		min = start
+		max = end
+		stat = True
+		for j in range(search_for + 1):
+			stat, location = find_num(perm, start, end, search_for + 1, num - j)
+			if not stat:
+				break
+			if min > location:
+				min = location
+			elif max < location:
+				max = location
+		if not stat:
+			result.append("0")
+			continue
+		if max - min <= len(result):
+			result.append("1")
+			start = min
+			end = max
 		else:
-			movt.remove((1, 0))
-			sum_x -= 1
-	while sum_y != 0:
-		if sum_y < 0:
-			movt.remove((0, -1))
-			sum_y += 1
-		else:
-			movt.remove((0, 1))
-			sum_y -= 1
-	return movt	
-	
-def place_items(movt):
-	count_U = min((movt.count("U"), movt.count("D")))
-	count_R = min((movt.count("R"), movt.count("L")))
-	if count_U == 0 and count_R == 0:
-		return ""
-	elif count_U == 0:
-		return "LR"
-	elif count_R == 0:
-		return "UD"
-	return "U"*count_U+"R"*count_R+"D"*count_U+"L"*count_R
+			result.append("0")
+
+	return "".join(result)
 
 
 rounds = int(input())
-movt_dict = {"L": (-1, 0),"R":(1, 0), "U":(0, 1), "D":(0, -1)}
-movt_dict_reverse = {(-1, 0):"L",(1, 0):"R", (0, 1):"U", (0, -1):"D"}
 for i in range(rounds):
-	numbers = list(input())
-	for i in range(len(numbers)):
-		numbers[i] = movt_dict[numbers[i]]
-	movt = end_correcter(numbers)
-	answer = "".join([movt_dict_reverse[i] for i in movt])
-	real_answer = place_items(answer)
-	print(len(real_answer))
-	print(real_answer)
-		
+	size = input()
+	numbers = input().split()
+	print(perm_check(numbers))
