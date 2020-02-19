@@ -1,6 +1,6 @@
 
 # https://leetcode.com/problems/minimum-increment-to-make-array-unique/
-
+# this is practice
 class Solution:
     
     def move_num(self, index, slot):

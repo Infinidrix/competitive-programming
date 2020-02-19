@@ -19,11 +19,20 @@ class Solution:
         for i in self.dir:
             new_head = [head[0] + i[0][0], head[1] + i[0][1]]
             new_tail = [tail[0] + i[1][0], tail[1] + i[1][1]]
-            if 0 <= new_head[0] < len(grid) and 0 <= new_head[1] < len(grid) and 0<= new_tail[0] < len(grid) and 0<= new_tail[1] < len(grid) and grid[new_head[0]][new_head[1]] == 0 and grid[new_tail[0]][new_tail[1]] == 0:
+            if (0 <= new_head[0] < len(grid) and 
+				0 <= new_head[1] < len(grid) and 
+				0 <= new_tail[0] < len(grid) and 
+				0 <= new_tail[1] < len(grid) and 
+				grid[new_head[0]][new_head[1]] == 0 and 
+				grid[new_tail[0]][new_tail[1]] == 0):
                 length, visited = self.mini_moves(grid, new_head, new_tail, moves + 1, visited)
                 if length < min_len:
                     min_len = length
-        if head[0] + 1 < len(grid) and tail[0] + 1 < len(grid) and grid[head[0] + 1][head[1]] == 0 and grid[tail[0] + 1][tail[1]] == 0 and head[0] == tail[0]:
+        if (head[0] + 1 < len(grid) and 
+			tail[0] + 1 < len(grid) and 
+			grid[head[0] + 1][head[1]] == 0 and 
+			grid[tail[0] + 1][tail[1]] == 0 and 
+			head[0] == tail[0]):
             i = self.specials[0]
             new_head = [head[0] + i[1][0], head[1] + i[1][1]]
             new_tail = [tail[0] + i[0][0], tail[1] + i[0][1]]
@@ -31,7 +40,11 @@ class Solution:
                 length, visited = self.mini_moves(grid, new_head, new_tail, moves + 1, visited)
                 if length < min_len:
                     min_len = length
-        if head[1] + 1 < len(grid) and tail[1] + 1 < len(grid) and grid[head[0]][head[1] + 1] == 0 and grid[tail[0]][tail[1] + 1] == 0 and head[1] == tail[1]:
+        if (head[1] + 1 < len(grid) and 
+			tail[1] + 1 < len(grid) and 
+			grid[head[0]][head[1] + 1] == 0 and 
+			grid[tail[0]][tail[1] + 1] == 0 and 
+			head[1] == tail[1]):
             # print("been here 3")
             i = self.specials[1]
             new_head = [head[0] + i[1][0], head[1] + i[1][1]]
